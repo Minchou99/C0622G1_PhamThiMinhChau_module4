@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1> Dictionary </h1>
-<form >
+<form method="post" >
     <input type="text" name="word" placeholder="Enter your word">
     <input type="submit" value="Search">
 </form>

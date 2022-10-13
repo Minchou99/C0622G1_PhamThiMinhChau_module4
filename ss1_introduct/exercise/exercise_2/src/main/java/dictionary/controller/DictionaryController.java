@@ -7,23 +7,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping
 public class DictionaryController {
     @Autowired
     private IDicService dicService;
 
     @GetMapping
-    public String showForm(){
+    public String showForm() {
         return "list";
     }
 
     @PostMapping
-    public String translate(@RequestParam String word, Model model){
+    public String translate(@RequestParam String word, Model model) {
         String trans = dicService.find(word);
-        model.addAttribute("trans",trans);
-        model.addAttribute("word",word);
+        model.addAttribute("trans", trans);
+        model.addAttribute("word", word);
         return "list";
     }
 }

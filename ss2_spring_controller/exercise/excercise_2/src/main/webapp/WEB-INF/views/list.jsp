@@ -12,8 +12,8 @@
 </head>
 <body>
 <form action="cal" method="post">
-    <input type="number" name="a" placeholder="Input value a" required>
-    <input type="number" name="b" placeholder="Input value b" required> <br>
+    <input type="number" name="a" placeholder="Input value a" >
+    <input type="number" name="b" placeholder="Input value b" > <br>
     <input type="submit" name="submit" value="add">
     <input type="submit" name="submit" value="sub">
     <input type="submit" name="submit" value="mul">

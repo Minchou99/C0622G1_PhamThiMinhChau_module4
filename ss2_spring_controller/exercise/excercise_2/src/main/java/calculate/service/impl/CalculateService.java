@@ -7,27 +7,24 @@ import org.springframework.stereotype.Service;
 public class CalculateService implements ICalculateService {
 
     @Override
-    public double calculator(double a, double b, String submit) {
-        double result;
-        switch (submit){
+    public String calculator(double a, double b, String submit) {
+        String result = "";
+        switch (submit) {
             case "add":
-                result = a + b;
+                result = a + b + "";
                 break;
             case "sub":
-                result = a - b;
+                result = a - b + "";
                 break;
             case "mul":
-                result = a * b;
+                result = a * b + "";
                 break;
             case "div":
-                if(b != 0){
-                    result = a/b;
-                    break;
-                } else {
-                    throw new RuntimeException("Can't divide by zero");
+                if(b!=0){
+                    result = a/b + "";
+                }else {
+                    result = "Không thể chia hết cho 0";
                 }
-            default:
-                throw new IllegalStateException("Unexpected value: " + submit);
         }
         return result;
     }

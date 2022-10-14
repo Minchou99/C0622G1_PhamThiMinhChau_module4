@@ -21,10 +21,11 @@ public class CalculateController {
     }
 
     @PostMapping("/cal")
-    public String result(@RequestParam(required = false) double a, double b, String submit, Model model) {
-        double result = calculateService.calculator(a, b, submit);
+    public String result(@RequestParam(required = false, defaultValue = "0") String a,
+                         @RequestParam(required = false, defaultValue = "0") String b,
+                         @RequestParam(required = false, defaultValue = "0") String submit, Model model) {
+        String result = calculateService.calculator(Double.parseDouble(a), Double.parseDouble(b), submit);
         model.addAttribute("result", result);
         return "list";
     }
-
 }

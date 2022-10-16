@@ -14,10 +14,10 @@
 <body>
 <h1>Sandwich Condiments</h1>
 <form method="post">
-    <input type="checkbox"  value="Lettuce" name="con"> Lettuce
-    <input type="checkbox"  value="Tomato" name="con"> Tomato
-    <input type="checkbox"  value="Mustard" name="con"> Mustard
-    <input type="checkbox"  value="Sprouts" name="con">Sprouts
+    <input type="checkbox"  value="Lettuce" name="condiment"> Lettuce
+    <input type="checkbox"  value="Tomato" name="condiment"> Tomato
+    <input type="checkbox"  value="Mustard" name="condiment"> Mustard
+    <input type="checkbox"  value="Sprouts" name="condiment">Sprouts
     <input type="submit" value="Save">
 </form>
 <table>
@@ -28,7 +28,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${con}" var="data" varStatus="c" >
+    <c:forEach items="${condiment}" var="data" varStatus="c" >
         <tr>
             <td>${c.count}</td>
             <td>${data}</td>

@@ -19,8 +19,8 @@ public class CondimentController {
     }
 
     @PostMapping
-    public String condiment(@RequestParam(required = false) String[] con  , Model model) {
-       model.addAttribute("con", con);
+    public String condiment(@RequestParam(required = false) String[] condiment  , Model model) {
+       model.addAttribute("condiment", condiment);
         return "home";
     }
 

@@ -27,7 +27,7 @@ public class BlogController {
     private ICategoryService categoryService;
 
     @GetMapping
-    public String showBlogList(@PageableDefault Pageable pageable, Model model) {
+    public String showBlogList(@PageableDefault(value = 3) Pageable pageable, Model model) {
         Page<Blog> blogList = blogService.findAll(pageable);
         model.addAttribute("blog", blogList);
         return "list";

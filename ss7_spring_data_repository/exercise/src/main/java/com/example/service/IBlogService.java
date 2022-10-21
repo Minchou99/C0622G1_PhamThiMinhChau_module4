@@ -8,9 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IBlogService {
-    List<Blog> findAll();
-
-    Page<Blog> findAll(Pageable pageable);
 
     void save(Blog blog);
 
@@ -20,5 +17,5 @@ public interface IBlogService {
 
     void remove(Blog blog);
 
-    List<Blog> findByName(String nameSearch);
+    Page<Blog> findByName(String nameSearch, Pageable pageable);
 }

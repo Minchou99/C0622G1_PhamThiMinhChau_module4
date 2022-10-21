@@ -1,6 +1,6 @@
 package com.example.exercise_blog.controller;
 
-import com.example.exercise_blog.model.Blog;
+import com.example.exercise_blog.model.Bloger;
 import com.example.exercise_blog.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,19 +19,19 @@ public class BlogController {
 
     @GetMapping
     public String showBlogList(Model model) {
-        List<Blog> blogList = blogService.findAll();
+        List<Bloger> blogList = blogService.findAll();
         model.addAttribute("blog", blogList);
         return "list";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("blog", new Blog());
+        model.addAttribute("blog", new Bloger());
         return "create";
     }
 
     @PostMapping("/save")
-    public String save(Blog blog) {
+    public String save(Bloger blog) {
         blogService.save(blog);
         return "redirect:/blog";
     }
@@ -43,7 +43,7 @@ public class BlogController {
     }
 
     @PostMapping("/delete")
-    public String delete(Blog blog, RedirectAttributes redirect) {
+    public String delete(Bloger blog, RedirectAttributes redirect) {
         blogService.remove(blog);
         redirect.addFlashAttribute("success", "Removed blog successfully!");
         return "redirect:/blog";
@@ -56,7 +56,7 @@ public class BlogController {
     }
 
     @PostMapping("/edit")
-    public String update(@ModelAttribute Blog blog) {
+    public String update(@ModelAttribute Bloger blog) {
         blogService.update(blog);
         return "redirect:/blog";
     }

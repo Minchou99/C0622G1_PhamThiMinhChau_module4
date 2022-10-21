@@ -1,17 +1,18 @@
 package com.example.exercise_blog.service;
 
-import com.example.exercise_blog.model.Blog;
+import com.example.exercise_blog.model.Bloger;
 
 import java.util.List;
 
 public interface IBlogService {
-    List<Blog> findAll();
 
-    void save(Blog blog);
+    List<Bloger> findAll();
 
-    Blog findById(int id);
+    void save(Bloger blog);
 
-    void update(Blog blog);
+    Bloger findById(int id);
 
-    void remove(Blog blog);
+    void update(Bloger blog);
+
+    void remove(Bloger blog);
 }

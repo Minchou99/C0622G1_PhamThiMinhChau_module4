@@ -1,9 +1,7 @@
-package com.example.exercise_blog.model;
+package com.example.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Blog {
@@ -12,13 +10,25 @@ public class Blog {
     private int id;
     private String name;
     private String author;
-    private String dateOfPost;
+    private Date dateOfPost;
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public Blog() {
     }
 
-    public Blog(int id, String name, String author, String dateOfPost, String content) {
+    public Blog(int id, String name, String author, Date dateOfPost, String content) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -50,11 +60,11 @@ public class Blog {
         this.author = author;
     }
 
-    public String getDateOfPost() {
+    public Date getDateOfPost() {
         return dateOfPost;
     }
 
-    public void setDateOfPost(String dateOfPost) {
+    public void setDateOfPost(Date dateOfPost) {
         this.dateOfPost = dateOfPost;
     }
 

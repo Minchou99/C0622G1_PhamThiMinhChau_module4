@@ -28,14 +28,14 @@ public class BlogController {
     public String showBlogList(@PageableDefault(value = 3) Pageable pageable, Model model, @RequestParam(defaultValue = "") String nameSearch) {
         Page<Blog> blogList = blogService.findByName(nameSearch, pageable);
         model.addAttribute("blog", blogList);
-        return "list";
+        return "blog/list";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("category", categoryService.findAll());
         model.addAttribute("blog", new Blog());
-        return "create";
+        return "blog/create";
     }
 
     @PostMapping("/save")
@@ -50,7 +50,7 @@ public class BlogController {
     public String delete(@RequestParam int id, Model model) {
         model.addAttribute("blog", blogService.findById(id));
         model.addAttribute("category", categoryService.findAll());
-        return "delete";
+        return "blog/delete";
     }
 
     @PostMapping("/delete")
@@ -64,7 +64,7 @@ public class BlogController {
     public String edit(@RequestParam int id, Model model) {
         model.addAttribute("blog", blogService.findById(id));
         model.addAttribute("category", categoryService.findAll());
-        return "edit";
+        return "blog/edit";
     }
 
     @PostMapping("/edit")
@@ -78,7 +78,7 @@ public class BlogController {
     public String view(@RequestParam int id, Model model) {
         model.addAttribute("blog", blogService.findById(id));
         model.addAttribute("category", categoryService.findAll());
-        return "view";
+        return "blog/view";
     }
 
 }

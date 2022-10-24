@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -54,10 +51,12 @@ public class SongController {
     }
 
     @GetMapping("/edit")
-    public ModelAndView showEditForm() {
-        ModelAndView modelAndView = new ModelAndView("/edit");
-        modelAndView.addObject("songDto", new SongDto());
-        return modelAndView;
+    public String showEditForm(@RequestParam int id, Model model) {
+        Song song = songService.findById(id);
+        SongDto songDto = new SongDto();
+        BeanUtils.copyProperties(song,songDto);
+        model.addAttribute("songDto",songDto);
+        return "edit";
     }
 
     @PostMapping("/edit")

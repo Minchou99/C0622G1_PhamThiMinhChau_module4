@@ -9,23 +9,22 @@ import javax.validation.constraints.*;
 public class UserDto implements Validator {
     private int id;
 
-    @NotBlank
+    @NotBlank(message = "First name not empty")
     @Size(min = 5, max = 45)
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Last name not empty")
     @Size(min = 5, max = 45)
     private String lastName;
 
-    @NotNull
+    @NotBlank(message = "Phone number not empty")
     private String phoneNumber;
 
 
     @Min(18)
     private int age;
 
-    @NotNull
-    @NotBlank
+    @NotBlank(message = "Email not empty")
     private String email;
 
     public UserDto() {

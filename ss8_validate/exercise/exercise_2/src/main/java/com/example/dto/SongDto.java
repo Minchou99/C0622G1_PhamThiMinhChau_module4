@@ -9,15 +9,15 @@ import javax.validation.constraints.Size;
 public class SongDto implements Validator {
     private int id;
 
-    @NotBlank
+    @NotBlank(message = "Name of song not empty")
     @Size(max = 800)
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Name of artist not empty")
     @Size(max = 300)
     private String artist;
 
-    @NotBlank
+    @NotBlank(message = "Type of music not empty")
     @Size(max = 1000)
     private String typeOfMusic;
 

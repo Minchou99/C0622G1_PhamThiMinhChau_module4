@@ -39,7 +39,7 @@
             <h5 th:text="${product.name}" class="card-title"></h5>
             <p th:text="${product.description}" class="card-text"></p>
             <h5 th:text="${product.price}" class="card-title"></h5>
-            <a th:href="@{/add/__${product.id}__(action='list')}" class="btn btn-primary">Đặt hàng</a>
+            <a th:href="@{/shop/add/__${product.id}__(action='list')}" class="btn btn-primary">Đặt hàng</a>
         </div>
     </div>
 </th:block>

@@ -45,21 +45,31 @@ public class ProductController {
         cookie.setMaxAge(24 * 60 * 60);
         cookie.setPath("/");
         response.addCookie(cookie);
+
         return new ModelAndView("product/detail", "product", productService.findById(id).get());
     }
 
     @GetMapping("/add/{id}")
     public String addToCart(@PathVariable Long id,
-                            @SessionAttribute("cart") CartDto cart) {
+                            @SessionAttribute("cart") CartDto cart,
+                            @RequestParam("action") String action) {
         Optional<Product> productOptional = productService.findById(id);
         if(!productOptional.isPresent()){
             return "error.404";
         }
-        if (productOptional.isPresent()) {
-            ProductDto productDto = new ProductDto();
-            BeanUtils.copyProperties(productOptional.get(), productDto);
-
-            cart.addProduct(productDto);
+        if (productOptional.isPresent()){
+            if(action.equals("show+")){
+                ProductDto productDto = new ProductDto();
+                BeanUtils.copyProperties(productOptional.get(), productDto);
+                cart.addProduct(productDto);
+//                return "redirect:/shopping-cart";
+            }
+            if(action.equals("show-")){
+                ProductDto productDto = new ProductDto();
+                BeanUtils.copyProperties(productOptional.get(), productDto);
+                cart.removeProduct(productDto);
+//                return "redirect:/shopping-cart";
+            }
         }
         return "redirect:/cart";
     }

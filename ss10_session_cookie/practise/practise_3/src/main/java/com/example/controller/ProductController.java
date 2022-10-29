@@ -35,7 +35,7 @@ public class ProductController {
         if (idProduct != -1) {
             model.addAttribute("historyProduct", productService.findById(idProduct).get());
         }
-        return new ModelAndView("product/list", "productList", productService.findAll());
+        return new ModelAndView("product/list", "product", productService.findAll());
     }
 
     @GetMapping("view/{id}")
@@ -46,7 +46,11 @@ public class ProductController {
         cookie.setPath("/");
         response.addCookie(cookie);
 
-        return new ModelAndView("product/detail", "product", productService.findById(id).get());
+        Optional<Product> productOptional = productService.findById(id);
+        if (!productOptional.isPresent()) {
+            return new ModelAndView("error.404");
+        }
+        return new ModelAndView("view", "product", productService.findById(id).get());
     }
 
     @GetMapping("/add/{id}")
@@ -54,24 +58,21 @@ public class ProductController {
                             @SessionAttribute("cart") CartDto cart,
                             @RequestParam("action") String action) {
         Optional<Product> productOptional = productService.findById(id);
-        if(!productOptional.isPresent()){
+        if (!productOptional.isPresent()) {
             return "error.404";
         }
-        if (productOptional.isPresent()){
-            if(action.equals("show+")){
-                ProductDto productDto = new ProductDto();
-                BeanUtils.copyProperties(productOptional.get(), productDto);
-                cart.addProduct(productDto);
-//                return "redirect:/shopping-cart";
-            }
-            if(action.equals("show-")){
-                ProductDto productDto = new ProductDto();
-                BeanUtils.copyProperties(productOptional.get(), productDto);
-                cart.removeProduct(productDto);
-//                return "redirect:/shopping-cart";
-            }
+        ProductDto productDto = new ProductDto();
+        BeanUtils.copyProperties(productOptional.get(), productDto);
+        if (action.equals("show+")) {
+            cart.addProduct(productDto);
+            return "redirect:/shopping-cart";
         }
-        return "redirect:/cart";
+        if (action.equals("show-")) {
+            cart.removeProduct(productDto);
+            return "redirect:/shopping-cart";
+        }
+        cart.addProduct(productDto);
+        return "redirect:/shop";
     }
 
 }

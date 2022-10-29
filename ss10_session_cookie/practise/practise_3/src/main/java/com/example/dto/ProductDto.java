@@ -1,5 +1,6 @@
 package com.example.dto;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class ProductDto {
@@ -56,6 +57,10 @@ public class ProductDto {
 
     public double getPrice() {
         return price;
+    }
+
+    private BigDecimal getPrice2() {
+        return new BigDecimal(price);
     }
 
     public void setPrice(double price) {

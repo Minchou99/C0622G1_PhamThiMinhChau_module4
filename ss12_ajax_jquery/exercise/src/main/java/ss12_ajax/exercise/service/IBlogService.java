@@ -13,6 +13,8 @@ public interface IBlogService {
 
     Page<Bloger> findAll(Pageable pageable);
 
+    List<Bloger> findByCategory(String nameCategory);
+
     void save(Bloger blog);
 
     Bloger findById(int id);

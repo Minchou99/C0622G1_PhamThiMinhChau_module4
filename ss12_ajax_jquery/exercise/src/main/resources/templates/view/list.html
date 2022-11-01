@@ -15,8 +15,10 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreate">
     Create
 </button>
+<input id="seachBlogName" type="text" name="nameSearch" placeholder="Input name category">
+<button id="searchBlog" type="button">Search</button>
 <button id="loading">Loading</button>
-<button id="search">Search</button>
+<input id="pageNumber" value="0" type="number" hidden>
 <table class="table">
     <thead>
     <tr>
@@ -70,6 +72,7 @@
         crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
+        let pageNumber = 1;
         function init() {
             setTimeout(function () {
                 $("tbody").empty();
@@ -86,13 +89,6 @@
                             tr.push("<td>" + data[i].dateOfPost + "</td>");
                             tr.push("<td>" + data[i].content + "</td>");
                             tr.push("<td>" + data[i].category.name + "</td>");
-                            if(data[i].category == null) {
-                                arr.push("<td>" + ""        + "</td>");
-
-                            } else {
-                                arr.push("<td>" + data[i].category.name + "</td>");
-
-                            }
                             tr.push("</tr>")
                         }
                         $("tbody").append(tr.join(""));
@@ -100,9 +96,10 @@
                 })
             }, 2000);
         }
+        init();
         $("#loading").click(function() {
             $.ajax({
-                url: "http://localhost:8080/blog"+"?page="+ $("#pageNumber").val(),
+                url: "http://localhost:8080/api/bloger/v1"+"?page="+ pageNumber,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -117,13 +114,15 @@
                         tr.push("</tr>")
                     }
                     $("tbody").append(tr.join(""));
-                    $("#pageNumber").val($("#pageNumber").val()+1)
+                   pageNumber++
                 }
             })
         })
-        $("#search").click(function() {
+        $("#searchBlog").click(function() {
+            $("tbody").empty();
+            let nameSearch = $("#seachBlogName").val();
             $.ajax({
-                url: "http://localhost:8080/blog"+"?search=",
+                url: "http://localhost:8080/api/bloger/v1/search-blog?nameSearch="+"?search="+nameSearch,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -141,7 +140,6 @@
                 }
             })
         })
-        init();
     })
 
 

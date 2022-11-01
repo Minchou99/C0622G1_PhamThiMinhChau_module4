@@ -26,6 +26,11 @@ public class BlogService implements IBlogService {
     }
 
     @Override
+    public List<Bloger> findByCategory(String nameCategory) {
+        return blogRepository.findAllByCategory(nameCategory);
+    }
+
+    @Override
     public void save(Bloger blog) {
         blogRepository.save(blog);
     }

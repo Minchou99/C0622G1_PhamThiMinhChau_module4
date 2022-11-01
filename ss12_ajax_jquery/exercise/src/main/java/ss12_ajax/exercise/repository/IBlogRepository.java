@@ -13,4 +13,9 @@ public interface IBlogRepository extends JpaRepository<Bloger, Integer> {
 
     @Query(value = "SELECT * FROM bloger JOIN category ON bloger.category_id = category.id WHERE category.name like %:keyword%", nativeQuery = true)
     List<Bloger> searchByNameCategory(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT * FROM bloger join category\n" +
+            "on bloger.category_id = category.id\n" +
+            "where category.name like %:nameCategory%",nativeQuery = true)
+    List<Bloger> findAllByCategory(@Param("nameCategory") String nameCategory);
 }

@@ -27,7 +27,7 @@ public class BlogerRestController {
         if (blogerList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity (blogerList.getContent(), HttpStatus.OK);
+        return new ResponseEntity<>(blogerList.getContent(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -82,6 +82,15 @@ public class BlogerRestController {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(blogList, HttpStatus.OK);
+    }
+
+    @GetMapping("/search-blog")
+    public ResponseEntity<List<Bloger>> getBlogByCategory(@RequestParam String nameSearch){
+        List<Bloger> blogerList = blogService.findByCategory(nameSearch);
+        if(blogerList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(blogerList, HttpStatus.OK);
     }
 
 

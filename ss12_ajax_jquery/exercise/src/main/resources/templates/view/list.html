@@ -73,6 +73,7 @@
 <script>
     $(document).ready(function () {
         let pageNumber = 1;
+
         function init() {
             setTimeout(function () {
                 $("tbody").empty();
@@ -88,7 +89,11 @@
                             tr.push("<td>" + data[i].author + "</td>");
                             tr.push("<td>" + data[i].dateOfPost + "</td>");
                             tr.push("<td>" + data[i].content + "</td>");
-                            tr.push("<td>" + data[i].category.name + "</td>");
+                            if (!data[i].category.name == null) {
+                                tr.push("<td>" + ":" + "</td>");
+                            } else {
+                                tr.push("<td>" + data[i].category.name + "</td>");
+                            }
                             tr.push("</tr>")
                         }
                         $("tbody").append(tr.join(""));
@@ -96,10 +101,11 @@
                 })
             }, 2000);
         }
+
         init();
-        $("#loading").click(function() {
+        $("#loading").click(function () {
             $.ajax({
-                url: "http://localhost:8080/api/bloger/v1"+"?page="+ pageNumber,
+                url: "http://localhost:8080/api/bloger/v1" + "?page=" + pageNumber,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -114,15 +120,15 @@
                         tr.push("</tr>")
                     }
                     $("tbody").append(tr.join(""));
-                   pageNumber++
+                    pageNumber++
                 }
             })
         })
-        $("#searchBlog").click(function() {
+        $("#searchBlog").click(function () {
             $("tbody").empty();
             let nameSearch = $("#seachBlogName").val();
             $.ajax({
-                url: "http://localhost:8080/api/bloger/v1/search-blog?nameSearch="+"?search="+nameSearch,
+                url: "http://localhost:8080/api/bloger/v1/search-blog?nameSearch=" + "?search=" + nameSearch,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -141,7 +147,6 @@
             })
         })
     })
-
 
 
     //     $("#btnCreate").click(function () {

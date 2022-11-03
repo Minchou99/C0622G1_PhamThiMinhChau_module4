@@ -1,2 +1,4 @@
-package com.codegym.repository;public class IUserRepository {
+package com.codegym.repository;
+
+public class IUserRepository {
 }

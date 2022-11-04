@@ -1,9 +1,10 @@
-package com.example.model;
+package com.example.model.facility;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.model.contract.Contract;
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Facility {
@@ -19,11 +20,24 @@ public class Facility {
     private double poolArea;
     private int numberOfFloors;
     private String facilityFree;
+    @Value("1")
+    private int isDelete;
+
+    @OneToMany(mappedBy = "facility")
+    private Set<Contract> contracts;
+
+    @ManyToOne
+    @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
+    private FacilityType facilityType;
+
+    @ManyToOne
+    @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
+    private RentType rentType;
 
     public Facility() {
     }
 
-    public Facility(int id, String name, int area, double cost, int maxPeople, String standardRoom, String descriptionOtherConvenience, double poolArea, int numberOfFloors, String facilityFree) {
+    public Facility(int id, String name, int area, double cost, int maxPeople, String standardRoom, String descriptionOtherConvenience, double poolArea, int numberOfFloors, String facilityFree, int isDelete, Set<Contract> contracts, FacilityType facilityType, RentType rentType) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -34,6 +48,10 @@ public class Facility {
         this.poolArea = poolArea;
         this.numberOfFloors = numberOfFloors;
         this.facilityFree = facilityFree;
+        this.isDelete = isDelete;
+        this.contracts = contracts;
+        this.facilityType = facilityType;
+        this.rentType = rentType;
     }
 
     public int getId() {
@@ -114,5 +132,37 @@ public class Facility {
 
     public void setFacilityFree(String facilityFree) {
         this.facilityFree = facilityFree;
+    }
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public Set<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<Contract> contracts) {
+        this.contracts = contracts;
+    }
+
+    public FacilityType getFacilityType() {
+        return facilityType;
+    }
+
+    public void setFacilityType(FacilityType facilityType) {
+        this.facilityType = facilityType;
+    }
+
+    public RentType getRentType() {
+        return rentType;
+    }
+
+    public void setRentType(RentType rentType) {
+        this.rentType = rentType;
     }
 }

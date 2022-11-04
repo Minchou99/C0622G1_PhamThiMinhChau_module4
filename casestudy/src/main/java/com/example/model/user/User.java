@@ -1,13 +1,25 @@
-package com.example.model;
+package com.example.model.user;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.example.model.employee.Employee;
+
+import javax.persistence.*;
 
 @Entity
 public class User {
     @Id
     private String username;
     private String password;
+
+    @OneToOne(mappedBy = "user")
+    private Employee employee;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     public User() {
     }

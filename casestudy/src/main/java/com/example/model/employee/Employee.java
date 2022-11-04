@@ -1,33 +1,64 @@
-package com.example.model;
+package com.example.model.employee;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import com.example.model.contract.Contract;
+import com.example.model.user.User;
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.persistence.*;
+import java.util.Set;
+
 @Entity
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String idCard;
+    private double salary;
     private String phoneNumber;
     private String email;
     private String address;
+    @Value("1")
+    private int isDelete;
+
+    @ManyToOne
+    @JoinColumn(name = "position_id", referencedColumnName = "id")
+    private Position position;
+
+    @ManyToOne
+    @JoinColumn(name = "division_id", referencedColumnName = "id")
+    private Division division;
+
+    @ManyToOne
+    @JoinColumn(name = "education_degree_id", referencedColumnName = "id")
+    private EducationDegree educationDegree;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private User user;
+
+    @OneToMany(mappedBy = "employee")
+    private Set<Contract> contracts;
 
     public Employee() {
     }
 
-    public Employee(int id, String name, Date dateOfBirth, String idCard, String phoneNumber, String email, String address) {
+    public Employee(int id, String name, String dateOfBirth, String idCard, double salary, String phoneNumber, String email, String address, int isDelete, Position position, Division division, EducationDegree educationDegree, User user, Set<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.idCard = idCard;
+        this.salary = salary;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
+        this.isDelete = isDelete;
+        this.position = position;
+        this.division = division;
+        this.educationDegree = educationDegree;
+        this.user = user;
+        this.contracts = contracts;
     }
 
     public int getId() {
@@ -46,11 +77,11 @@ public class Employee {
         this.name = name;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -60,6 +91,14 @@ public class Employee {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 
     public String getPhoneNumber() {
@@ -84,5 +123,53 @@ public class Employee {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Division getDivision() {
+        return division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
+    }
+
+    public EducationDegree getEducationDegree() {
+        return educationDegree;
+    }
+
+    public void setEducationDegree(EducationDegree educationDegree) {
+        this.educationDegree = educationDegree;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<Contract> contracts) {
+        this.contracts = contracts;
     }
 }

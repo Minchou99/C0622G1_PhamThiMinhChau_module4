@@ -1,25 +1,18 @@
-package com.example.model.customer;
+package com.example.dto.customer;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.beans.factory.annotation.Value;
+import com.example.model.customer.Customer;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-public class CustomerType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CustomerTypeDto {
     private int id;
     private String name;
-
-    @OneToMany(mappedBy = "customerType")
     private Set<Customer> customers;
 
-    public CustomerType() {
+    public CustomerTypeDto() {
     }
 
-    public CustomerType(int id, String name, Set<Customer> customers) {
+    public CustomerTypeDto(int id, String name, Set<Customer> customers) {
         this.id = id;
         this.name = name;
         this.customers = customers;

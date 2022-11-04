@@ -1,40 +1,37 @@
-package com.example.model.customer;
+package com.example.dto.customer;
 
 import com.example.model.contract.Contract;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.beans.factory.annotation.Value;
+import com.example.model.customer.CustomerType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-@Entity
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CustomerDto implements Validator {
     private int id;
+    @NotBlank(message = "Do not empty, please fill in...")
     private String name;
+    @NotBlank(message = "Do not empty, please fill in...")
     private String dateOfBirth;
+//    @NotBlank(message = "Do not empty, please fill in...")
     private int gender;
+    @NotBlank(message = "Do not empty, please fill in...")
     private String idCard;
+    @NotBlank(message = "Do not empty, please fill in...")
     private String phoneNumber;
+    @NotBlank(message = "Do not empty, please fill in...")
     private String email;
+    @NotBlank(message = "Do not empty, please fill in...")
     private String address;
-
-    @Value("1")
     private int isDelete;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_type_id", referencedColumnName = "id")
     private CustomerType customerType;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "customer")
     private Set<Contract> contracts;
 
-    public Customer() {
+    public CustomerDto() {
     }
 
-    public Customer(int id, String name, String dateOfBirth, int gender, String idCard, String phoneNumber, String email, String address, int isDelete, CustomerType customerType, Set<Contract> contracts) {
+    public CustomerDto(int id, String name, String dateOfBirth, int gender, String idCard, String phoneNumber, String email, String address, int isDelete, CustomerType customerType, Set<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -134,5 +131,15 @@ public class Customer {
 
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }

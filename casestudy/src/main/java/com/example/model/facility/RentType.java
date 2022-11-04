@@ -1,9 +1,9 @@
-package com.example.model;
+package com.example.model.facility;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class RentType {
@@ -12,12 +12,16 @@ public class RentType {
     private int id;
     private String name;
 
+    @OneToMany(mappedBy = "rentType")
+    private Set<Facility> facilities;
+
     public RentType() {
     }
 
-    public RentType(int id, String name) {
+    public RentType(int id, String name, Set<Facility> facilities) {
         this.id = id;
         this.name = name;
+        this.facilities = facilities;
     }
 
     public int getId() {
@@ -34,5 +38,13 @@ public class RentType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Facility> getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(Set<Facility> facilities) {
+        this.facilities = facilities;
     }
 }

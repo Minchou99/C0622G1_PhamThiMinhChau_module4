@@ -1,9 +1,10 @@
-package com.example.model;
+package com.example.model.employee;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Value;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Division {
@@ -12,12 +13,16 @@ public class Division {
     private int id;
     private String name;
 
+    @OneToMany(mappedBy = "division")
+    private Set<Employee> employees;
+
     public Division() {
     }
 
-    public Division(int id, String name) {
+    public Division(int id, String name, Set<Employee> employees) {
         this.id = id;
         this.name = name;
+        this.employees = employees;
     }
 
     public int getId() {
@@ -34,5 +39,13 @@ public class Division {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }

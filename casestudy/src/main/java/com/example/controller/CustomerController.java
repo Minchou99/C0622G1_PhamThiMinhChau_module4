@@ -16,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
@@ -26,11 +28,16 @@ public class CustomerController {
     private ICustomerTypeService customerTypeService;
 
     @GetMapping
-    public String showList(@PageableDefault(value = 3)Pageable pageable, Model model,
-                         @RequestParam(defaultValue = "") String nameSearch
+    public String showList(@RequestParam(value = "searchName", defaultValue = "") String name,
+            @RequestParam(value = "searchEmail", defaultValue = "") String email,
+            @RequestParam(value = "searchCustomerType", defaultValue = "") String typeName,
+            @PageableDefault(value = 3)Pageable pageable, Model model
     ){
-        Page<Customer> customerPage = customerService.findAllByPagable(pageable);
+        Page<Customer> customerPage = customerService.findByNameAndEmailAndCustomerType(name, email, typeName,pageable);
         model.addAttribute("customer", customerPage);
+        model.addAttribute("searchName", name);
+        model.addAttribute("searchEmail", email);
+        model.addAttribute("searchCustomerType", typeName);
         return "customer/list";
     }
 
@@ -45,22 +52,88 @@ public class CustomerController {
     public String createCustomer(@Validated @ModelAttribute CustomerDto customerDto,
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes,
-                                 Model model){
+                                 Model model) {
         new CustomerDto().validate(customerDto, bindingResult);
 
-        if(bindingResult.hasFieldErrors()){
+        if (bindingResult.hasFieldErrors()) {
             model.addAttribute("customerType", customerTypeService.findAll());
             model.addAttribute("customer", customerService.findAll());
             return "/customer/create";
-        } else{
+        } else {
             Customer customer = new Customer();
             BeanUtils.copyProperties(customerDto, customer);
 
-            customerService.create(customer);
-            redirectAttributes.addFlashAttribute("message","Create customer: " + customer.getName() + " OK !");
+            customerService.save(customer);
+            redirectAttributes.addFlashAttribute("message", "Create customer: " + customer.getName() + " OK !");
+            return "redirect:/customer";
+        }
+    }
+
+        @GetMapping("/{id}/delete")
+        public String remove(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirect) {
+            Optional<Customer> optionalCustomer = customerService.findById(id);
+            if (!optionalCustomer.isPresent()) {
+                redirect.addFlashAttribute("message", "Customer not found!");
+                return "redirect:/customer";
+            }
+            model.addAttribute("customer", optionalCustomer.get());
+            return "customer/delete";
+        }
+
+        @PostMapping("/delete")
+        public String remove(@RequestParam(value = "id") int id, RedirectAttributes redirect) {
+            Optional<Customer> optionalCustomer = customerService.findById(id);
+            if (!optionalCustomer.isPresent()) {
+                redirect.addFlashAttribute("message", "Customer not found!");
+            } else {
+                customerService.remove(id);
+                redirect.addFlashAttribute("message", "Customer removed!");
+            }
             return "redirect:/customer";
         }
 
+        @GetMapping("/{id}/edit")
+        public String update(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirect) {
+            Optional<Customer> optionalCustomer = customerService.findById(id);
+            if (!optionalCustomer.isPresent()) {
+                redirect.addFlashAttribute("message", "Customer not found!");
+                return "redirect:/customer";
+            }
+            CustomerDto customerDto = new CustomerDto();
+            BeanUtils.copyProperties(optionalCustomer.get(), customerDto);
+            model.addAttribute("customerDto", customerDto);
+            return "customer/edit";
+        }
+
+        @PostMapping("/edit")
+        public String update(@Validated @ModelAttribute(value = "customerDto") CustomerDto customerDto,
+                BindingResult bindingResult,
+                RedirectAttributes redirect) {
+            Optional<Customer> optionalCustomer = customerService.findById(customerDto.getId());
+            if (!optionalCustomer.isPresent()) {
+                redirect.addFlashAttribute("message", "Customer not found!");
+                return "redirect:/customer";
+            }
+            if (!bindingResult.hasErrors()) {
+                Customer customer = new Customer();
+                BeanUtils.copyProperties(customerDto, customer);
+                customerService.save(customer);
+                redirect.addFlashAttribute("message", "Customer saved successfully");
+                return "redirect:/customer";
+            }
+            redirect.addFlashAttribute("message", "Customer saved failed");
+            return "redirect:/customer";
+        }
+
+        @GetMapping("/{id}/view")
+        public String view(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirect) {
+            Optional<Customer> optionalCustomer = customerService.findById(id);
+            if (!optionalCustomer.isPresent()) {
+                redirect.addFlashAttribute("message", "Customer not found!");
+                return "redirect:/customer";
+            }
+            model.addAttribute("customer", optionalCustomer.get());
+            return "customer/detail";
+        }
     }
 
-}

@@ -1,22 +1,28 @@
 package com.example.service;
 
 import com.example.model.customer.Customer;
+import com.example.model.customer.CustomerType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICustomerService {
     List<Customer> findAll();
 
-    Page<Customer> findAllByPagable(Pageable pageable);
+    Page<Customer> findByNameAndEmailAndCustomerType(String name,
+                                                     String email,
+                                                     String typeName,
+                                                     Pageable pageable);
 
-    Customer findById(int id);
+    Optional<Customer> findById(int id);
 
-    void create(Customer customer);
+    void save(Customer customer);
 
-    void update(Customer customer);
+    void remove(int id);
 
-    void remove(Customer customer);
+    List<CustomerType> getCustomerTypes();
+
 
 }

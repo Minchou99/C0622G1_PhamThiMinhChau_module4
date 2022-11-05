@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.customer.Customer;
+import com.example.model.customer.CustomerType;
 import com.example.repository.customer.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService implements ICustomerService {
@@ -20,27 +22,29 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<Customer> findAllByPagable(Pageable pageable) {
-        return customerRepository.findAll(pageable);
+    public Page<Customer> findByNameAndEmailAndCustomerType(String name, String email, String typeName, Pageable pageable) {
+        return customerRepository.findByNameAndEmailAndCustomerType(name, email, typeName, pageable);
     }
 
     @Override
-    public Customer findById(int id) {
-        return customerRepository.findById(id).orElse(null);
+    public Optional<Customer> findById(int id) {
+        return customerRepository.findById(id);
     }
 
     @Override
-    public void create(Customer customer) {
+    public void save(Customer customer) {
         customerRepository.save(customer);
     }
 
+
+
     @Override
-    public void update(Customer customer) {
-        customerRepository.save(customer);
+    public void remove(int id) {
+        customerRepository.remove(id);
     }
 
     @Override
-    public void remove(Customer customer) {
-        customerRepository.delete(customer);
+    public List<CustomerType> getCustomerTypes() {
+        return customerRepository.getCustomerType();
     }
 }

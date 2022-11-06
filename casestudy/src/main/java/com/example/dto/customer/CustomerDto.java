@@ -5,27 +5,44 @@ import com.example.model.customer.CustomerType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 public class CustomerDto implements Validator {
+
     private int id;
+
     @NotBlank(message = "Do not empty, please fill in...")
+    @Pattern(regexp = "^([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",
+            message = "Invalid format (ex: Phạm Thị Minh Châu)")
     private String name;
+
     @NotBlank(message = "Do not empty, please fill in...")
     private String dateOfBirth;
-//    @NotBlank(message = "Do not empty, please fill in...")
+
     private int gender;
+
     @NotBlank(message = "Do not empty, please fill in...")
+    @Pattern(regexp = "^(\\d{9}|\\d{12})$", message = "Invalid Id card (ex: 123456789)")
     private String idCard;
+
     @NotBlank(message = "Do not empty, please fill in...")
+    @Pattern(regexp = "^(090|091|\\(\\+84\\)90|\\(\\+84\\)91)\\d{7}$")
     private String phoneNumber;
+
     @NotBlank(message = "Do not empty, please fill in...")
+    @Email(message = "invalid email (ex: thuytiendang2003@gmail.com)")
     private String email;
+
     @NotBlank(message = "Do not empty, please fill in...")
     private String address;
+
     private int isDelete;
+
     private CustomerType customerType;
+
     private Set<Contract> contracts;
 
     public CustomerDto() {

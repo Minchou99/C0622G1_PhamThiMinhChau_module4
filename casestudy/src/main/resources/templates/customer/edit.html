@@ -1,10 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row" style="width: 100%; padding: 0; margin: 0;">
+        <div id="content">
+            <div class="notify">
+                <div th:if="${message}">
+                    <h2 style="color: #4caf50" th:text="${message}"></h2>
+                </div>
+            </div>
 
+            <h1 style="text-align: center; color: blue">Edit Customer</h1>
+
+            <form action="/customer/edit" th:object="${customerDto}"
+                  method="post" novalidate="novalidate">
+                <fieldset style="width: 50%; margin-left: 25%">
+                    <legend>Sửa thông tin</legend>
+                    <table class="table table-striped" style="text-align: left">
+                        <input type="hidden" th:field="*{id}"/>
+                        <tr>
+                            <td>Tên</td>
+                            <td><input type="text" th:field="*{name}"></td>
+                        </tr>
+                        <tr>
+                            <td>Ngày sinh</td>
+                            <td><input type="text" th:field="*{dateOfBirth}"></td>
+                        </tr>
+                        <tr>
+                            <td>Giới tính</td>
+                            <td>
+                                <input type="radio" th:field="*{gender}" value="0">Female
+                                <input type="radio" th:field="*{gender}" value="1">Male
+                                <input type="radio" th:field="*{gender}" value="2">Other
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CMND</td>
+                            <td><input type="text" th:field="*{idCard}"></td>
+                        </tr>
+                        <tr>
+                            <td>SĐT</td>
+                            <td><input type="text" th:field="*{phoneNumber}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><input type="text" th:field="*{email}"></td>
+                        </tr>
+                        <tr>
+                            <td>Địa chỉ</td>
+                            <td><input type="text" th:field="*{address}"></td>
+                        </tr>
+                        <tr>
+                            <td>Loại khách</td>
+                            <td><select th:field="*{customerType}">
+                                <option th:each="customerType: ${customerType}"
+                                        th:value="${customerType.id}" th:text="${customerType.name}"></option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td><a th:href="@{/customer/{id}/edit(id=${customerDto.id})}" class="btn btn-primary" role="button">Cancel</a></td>
+                            <td><button type="submit" class="btn btn-primary">Edit</button></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

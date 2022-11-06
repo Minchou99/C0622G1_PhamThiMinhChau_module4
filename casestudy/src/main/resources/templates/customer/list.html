@@ -51,7 +51,7 @@
     </style>
 </head>
 <body>
-<div class="container-fluid" >
+<div class="container-fluid">
     <h3>Customer List</h3>
     <p><a class="btn btn-primary" th:href="@{/customer/create}">
         Add new Customer
@@ -68,8 +68,11 @@
         <form action="/customer">
             <input style="width: 30%" type="text" name="nameSearch" placeholder="Input name..."/>
             <input style="width: 30%" type="text" name="emailSearch" placeholder="Input email..."/>
-            <input style="width: 30%" type="text" name="customerTypeSearch" placeholder="Input customer type..."/>
-            <input  class="btn btn-primary" type="submit" value="Search">
+            <select name="searchCustomerType">
+                <option value="" selected>All Type</option>
+                <option th:each="item: ${customerType}" th:value="${item.name}" th:text="${item.name}"></option>
+            </select>
+            <input class="btn btn-primary" type="submit" value="Search">
         </form>
     </div>
 
@@ -105,9 +108,25 @@
             <td th:text="${row.getEmail()}"></td>
             <td th:text="${row.getAddress()}"></td>
             <td th:text="${row.customerType.name}"></td>
-            <td><a style="text-decoration: none; color: black" th:href="@{/customer/{id}/edit/(id=${row.getId()})}">Edit</a></td>
-            <td><a style="text-decoration: none; color: black" th:href="@{/customer/{id}/delete/(id=${row.getId()})}">Delete</a></td>
-            <td><a style="text-decoration: none; color: black" th:href="@{/customer/view/(id=${row.getId()})}">View</a></td>
+            <td><a style="text-decoration: none; color: black"
+                   th:href="@{/customer/{id}/edit/(id=${row.getId()})}">Edit</a></td>
+
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal" th:attr="onclick=|infoDelete('${row.id}', '${row.name}')|">
+                    Delete
+                </button>
+            </td>
+
+            <td class="text-center">
+                <a th:attr="onclick=|details('${row.name}', '${row.dateOfBirth}',
+                '${row.gender}', '${row.idCard}', '${row.phoneNumber}',
+                '${row.email}', '${row.address}',
+                '${row.customerType.name}')|" data-bs-toggle="modal" data-bs-target="#viewCustomer">
+                    <span class="text-success"><i class="fa-solid fa-eye">View</i></span>
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -133,87 +152,78 @@
         </div>
     </div>
     <!--delete modal-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel-delete">Xóa Khách Hàng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span id="deleteEror">Không tìm thấy khách hàng</span>
-                    Xóa Khách Hàng <strong id="nameDelete"></strong>?
+                    <p>
+                        Are you sure you want to delete <span style="color: red" id="nameDelete"></span>?
+                    </p>
                 </div>
-                <div class="modal-footer" id="deleteButton">
-                    <button id="deleteCancel" class="btn btn-secondary" data-bs-dismiss="modal"></button>
-                    <form id="deleteForm" action="/customer/delete" method="post">
-                        <input type="hidden" name="id" id="idDelete">
-                        <input type="submit" value="Xác nhận" class="btn btn-danger">
+                <div class="modal-footer">
+                    <form action="/customer/delete">
+                        <input type="text" name="idDelete" id="id" hidden>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-danger" type="submit">Delete</button>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- View Modal -->
-    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <!--    view-->
+    <div class="modal fade" id="viewCustomer" tabindex="-1" aria-labelledby="exampleModalLabel1"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel-view">Thông tin chi tiết</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                    <h4 class="modal-title" id="exampleModalLabel2">Customer information</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span id="viewEror">Không tìm thấy khách hàng</span>
-                    <fieldset>
-                        <table class="table table-striped table-bordered" style="width: 100%">
-                            <tr>
-                                <td>Tên</td>
-                                <td><p id="nameView"></p></td>
-                            </tr>
-                            <tr>
-                                <td>Ngày sinh</td>
-                                <td><p id="dateOfBirthView"></p></td>
-                            </tr>
-                            <tr>
-                                <td>Giới tính</td>
-                                <td><p id="genderView"></p></td>
-                            </tr>
-                            <tr>
-                                <td>CMND</td>
-                                <td><p id="idCardView"></p></td>
-                            </tr>
-                            <tr>
-                                <td>SĐT</td>
-                                <td><p id="phoneNumberView"></p></td>
-                            </tr>
-                            <tr>
-                                <td>Email</td>
-                                <td><p id="emailView"></p></td>
-                            </tr>
-                            <tr>
-                                <td>Địa chỉ</td>
-                                <td><p id="addressView"></p></td>
-                            </tr>
-                            <tr>
-                                <td>Loại khách</td>
-                                <td><p id="customerTypeView"></p></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <div class="modal-footer">
-                                        <button  class="btn btn-secondary" data-bs-dismiss="modal">Quay
-                                            lại</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
+                    <table class="table table-success table-striped">
+                        <tr>
+                            <th>Name</th>
+                            <td><span id="name"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td><span id="birthday"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td><span id="gender"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Id card</th>
+                            <td><span id="idCard"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Phone number</th>
+                            <td><span id="phone"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td><span id="email"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td><span id="address"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Customer type</th>
+                            <td><span id="customerType"></span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -231,61 +241,28 @@
         crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
+    function infoDelete(id, name) {
+        document.getElementById("nameDelete").innerText = name;
+        document.getElementById("id").value = id;
+    }
 
-    $(".deleteConfirm").click(function () {
-        let href = $(this).attr('href');
-        $.ajax({
-            url: "http://localhost:8080" + href,
-            type: "GET",
-            dataType: "json",
-            success: function (customer) {
-                if (customer == null) {
-                    $("#deleteName").text("Thất bại");
-                    $("#deleteCancel").text("Kiểm tra lại");
-                    $("#deleteForm").hide();
-                } else {
-                    $("#deleteEror").hide();
-                    $("#deleteCancel").text("Huỷ bỏ");
-                    $("#nameDelete").text(customer.name);
-                    $("#idDelete").val(customer.id);
-                }
-            }
-        })
-    })
-
-    $(".view").click(function () {
-        let href = $(this).attr('href');
-        $.ajax({
-            url: "http://localhost:8080" + href,
-            type: "GET",
-            dataType: "json",
-            success: function (customer) {
-                if (customer != null) {
-                    $("#viewEror").hide();
-                    $("#nameView").text(customer.name);
-                    $("#dateOfBirthView").text(customer.dateOfBirth);
-
-                    switch (customer.gender) {
-                        case 0 :
-                            $("#genderView").text("Female");
-                            break;
-                        case 1 :
-                            $("#genderView").text("Male");
-                            break;
-                        default:
-                            $("#genderView").text("Other");
-                            break;
-                    }
-
-                    $("#idCardView").text(customer.idCard);
-                    $("#phoneNumberView").text(customer.phoneNumber);
-                    $("#emailView").text(customer.email);
-                    $("#addressView").text(customer.address);
-                    $("#customerTypeView").text(customer.customerType.name);
-                }
-            }
-        })
-    })
+    function details(name, birthday, gender, idCard, phone, email, address, customerType) {
+        document.getElementById("name").innerText = name;
+        document.getElementById("birthday").innerText = birthday;
+        if (gender === 0) {
+            document.getElementById("gender").innerText = "Female";
+        } else if (gender === 1) {
+            document.getElementById("gender").innerText = "Male";
+        } else {
+            document.getElementById("gender").innerText = "Other";
+        }
+        document.getElementById("idCard").innerText = idCard;
+        document.getElementById("phone").innerText = phone;
+        document.getElementById("email").innerText = email;
+        document.getElementById("address").innerText = address;
+        document.getElementById("customerType").innerText = customerType;
+    }
+</script>
 </script>
 </body>
 </html>

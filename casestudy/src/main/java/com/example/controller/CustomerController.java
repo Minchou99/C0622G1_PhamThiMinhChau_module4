@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
-@CrossOrigin("*")
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
@@ -37,7 +36,9 @@ public class CustomerController {
                            @PageableDefault(value = 3) Pageable pageable, Model model
     ) {
         Page<Customer> customerPage = customerService.findByNameAndEmailAndCustomerType(name, email, typeName, pageable);
+
         model.addAttribute("customer", customerPage);
+        model.addAttribute("customerType", customerTypeService.findAll());
         model.addAttribute("searchName", name);
         model.addAttribute("searchEmail", email);
         model.addAttribute("searchCustomerType", typeName);
@@ -72,28 +73,8 @@ public class CustomerController {
         }
     }
 
-//    @GetMapping("/{id}/delete")
-//    public String remove(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirect) {
-//        Optional<Customer> optionalCustomer = customerService.findById(id);
-//        if (!optionalCustomer.isPresent()) {
-//            redirect.addFlashAttribute("message", "Customer not found!");
-//            return "redirect:/customer";
-//        }
-//        model.addAttribute("customer", optionalCustomer.get());
-//        return "customer/delete";
-//    }
-
-    @GetMapping("/{id}/delete")
-    public ResponseEntity<Customer> remove(@PathVariable(value = "id") int id) {
-        Optional<Customer> optionalCustomer = customerService.findById(id);
-        if (!optionalCustomer.isPresent()) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(optionalCustomer.get(), HttpStatus.OK);
-    }
-
-    @PostMapping("/delete")
-    public String remove(@RequestParam(value = "id") int id, RedirectAttributes redirect) {
+    @GetMapping("/delete")
+    public String remove(@RequestParam(value = "idDelete") int id, RedirectAttributes redirect) {
         Optional<Customer> optionalCustomer = customerService.findById(id);
         if (!optionalCustomer.isPresent()) {
             redirect.addFlashAttribute("message", "Customer not found!");
@@ -138,24 +119,15 @@ public class CustomerController {
         return "redirect:/customer";
     }
 
-//    @GetMapping("/{id}/view")
-//    public String view(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirect) {
-//        Optional<Customer> optionalCustomer = customerService.findById(id);
-//        if (!optionalCustomer.isPresent()) {
-//            redirect.addFlashAttribute("message", "Customer not found!");
-//            return "redirect:/customer";
-//        }
-//        model.addAttribute("customer", optionalCustomer.get());
-//        return "customer/list";
-//    }
-
     @GetMapping("/{id}/view")
-    public ResponseEntity<Customer> view(@PathVariable(value = "id") int id) {
+    public String view(@PathVariable(value = "id") int id, Model model, RedirectAttributes redirect) {
         Optional<Customer> optionalCustomer = customerService.findById(id);
         if (!optionalCustomer.isPresent()) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            redirect.addFlashAttribute("message", "Customer not found!");
+            return "redirect:/customer";
         }
-        return new ResponseEntity<>(optionalCustomer.get(), HttpStatus.OK);
+        model.addAttribute("customer", optionalCustomer.get());
+        return "redirect:/customer";
     }
 
 }

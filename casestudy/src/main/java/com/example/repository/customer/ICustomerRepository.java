@@ -26,14 +26,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "select * from `customer` where id=:id and is_delete = 1", nativeQuery = true)
     Optional<Customer> findById(@Param("id") int id);
 
-    @Query(value = "select c.* from `customer` c inner join `customer_type` ct " +
-            "on c.customer_type_id = ct.id " +
-            "where c.name like %:name% and c.email like %:email% and ct.name like %:typeName% and c.status= 1", nativeQuery = true)
-    Page<Customer> findByNameAndEmailAndCustomerType2(@Param("name") String name,
-                                                     @Param("email") String email,
-                                                     @Param("typeName") String typeName,
-                                                     Pageable pageable);
-
     @Transactional
     @Modifying
     @Query(value = "update customer set is_delete = 0 where id = :id;", nativeQuery = true)
@@ -53,7 +45,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
               @Param("customer_type_id") int customerTypeId,
               @Param("is_delete") int is_delete);
 
-    @Query(value = "select * from customer_type where is_delete = 1", nativeQuery = true)
+    @Query(value = "select * from customer_type ", nativeQuery = true)
     List<CustomerType> getCustomerType();
 
 

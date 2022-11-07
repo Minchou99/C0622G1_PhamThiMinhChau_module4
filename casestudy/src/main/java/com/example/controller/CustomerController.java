@@ -2,15 +2,13 @@ package com.example.controller;
 
 import com.example.dto.customer.CustomerDto;
 import com.example.model.customer.Customer;
-import com.example.service.ICustomerService;
-import com.example.service.ICustomerTypeService;
+import com.example.service.customer.ICustomerService;
+import com.example.service.customer.ICustomerTypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,8 +28,8 @@ public class CustomerController {
     private ICustomerTypeService customerTypeService;
 
     @GetMapping
-    public String showList(@RequestParam(value = "searchName", defaultValue = "") String name,
-                           @RequestParam(value = "searchEmail", defaultValue = "") String email,
+    public String showList(@RequestParam(value = "nameSearch", defaultValue = "") String name,
+                           @RequestParam(value = "emailSearch", defaultValue = "") String email,
                            @RequestParam(value = "searchCustomerType", defaultValue = "") String typeName,
                            @PageableDefault(value = 3) Pageable pageable, Model model
     ) {
@@ -39,8 +37,8 @@ public class CustomerController {
 
         model.addAttribute("customer", customerPage);
         model.addAttribute("customerType", customerTypeService.findAll());
-        model.addAttribute("searchName", name);
-        model.addAttribute("searchEmail", email);
+        model.addAttribute("nameSearch", name);
+        model.addAttribute("emailSearch", email);
         model.addAttribute("searchCustomerType", typeName);
         return "customer/list";
     }
@@ -60,7 +58,7 @@ public class CustomerController {
         new CustomerDto().validate(customerDto, bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
-            model.addAttribute("customerType", customerTypeService.findAll());
+            model.addAttribute("customerTypeList", customerTypeService.findAll());
             model.addAttribute("customer", customerService.findAll());
             return "/customer/create";
         } else {
@@ -79,7 +77,9 @@ public class CustomerController {
         if (!optionalCustomer.isPresent()) {
             redirect.addFlashAttribute("message", "Customer not found!");
         } else {
-            customerService.remove(id);
+            Customer customer = optionalCustomer.get();
+            customer.setIsDelete(0);
+            customerService.save(customer);
             redirect.addFlashAttribute("message", "Customer removed!");
         }
         return "redirect:/customer";
@@ -114,9 +114,10 @@ public class CustomerController {
             customerService.save(customer);
             redirect.addFlashAttribute("message", "Customer saved successfully");
             return "redirect:/customer";
+        } else {
+            redirect.addFlashAttribute("message", "Customer saved failed");
+            return "redirect:/customer";
         }
-        redirect.addFlashAttribute("message", "Customer saved failed");
-        return "redirect:/customer";
     }
 
     @GetMapping("/{id}/view")

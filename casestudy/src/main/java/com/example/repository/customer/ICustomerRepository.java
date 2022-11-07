@@ -28,13 +28,13 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update customer set is_delete = 0 where id = :id;", nativeQuery = true)
+    @Query(value = "update customer set is_delete = 0 where id = :id", nativeQuery = true)
     void remove(@Param("id") int id);
 
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO customer ( name, date_of_birth,gender,id_card, phone_number, email, address, customer_type_id, is_delete)\n" +
-            "VALUE ( :name, :date_of_birth,:gender,:id_card, :phone_number, :email, :address, :customer_type_id, :is_delete);\n;", nativeQuery = true)
+            "VALUE ( :name, :date_of_birth,:gender,:id_card, :phone_number, :email, :address, :customer_type_id, 1);\n;", nativeQuery = true)
     void save(@Param("name") String name,
               @Param("date_of_birth") String dateOfBirth,
               @Param("gender") int gender,
@@ -42,8 +42,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
               @Param("phone_number") String phoneNumber,
               @Param("email") String email,
               @Param("address") String address,
-              @Param("customer_type_id") int customerTypeId,
-              @Param("is_delete") int is_delete);
+              @Param("customer_type_id") int customerTypeId);
 
     @Query(value = "select * from customer_type ", nativeQuery = true)
     List<CustomerType> getCustomerType();

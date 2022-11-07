@@ -110,5 +110,9 @@ values (1,2,4,5),
 (7,1,2,2),
 (8,12,2,2);
 
+select f.* from facility f
+join facility_type ft on f.facility_type_id = ft.id 
+where f.name like '%%' and ft.name like '%%' and f.is_delete = 1;
+
 
 

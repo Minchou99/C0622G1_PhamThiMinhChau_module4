@@ -66,11 +66,17 @@
 
     <div>
         <form action="/customer">
-            <input style="width: 30%" type="text" name="nameSearch" placeholder="Input name..."/>
-            <input style="width: 30%" type="text" name="emailSearch" placeholder="Input email..."/>
-            <select name="searchCustomerType">
-                <option value="" selected>All Type</option>
-                <option th:each="item: ${customerType}" th:value="${item.name}" th:text="${item.name}"></option>
+            <input style="width: 30%" type="text" name="nameSearch" th:value="${nameSearch}" placeholder="Input name..."/>
+            <input style="width: 30%" type="text" name="emailSearch" th:value="${emailSearch}" placeholder="Input email..."/>
+            <select name="searchCustomerType" class="mx-3">
+                <option th:if="${searchCustomerType}!=''"
+                        th:value="${searchCustomerType}"
+                        th:text="${searchCustomerType}"></option>
+                <option th:value="''"
+                        th:text="'--All Type--'"></option>
+                <option th:each="customerTypeList: ${customerType}"
+                        th:value="${customerTypeList.name}"
+                        th:text="${customerTypeList.name}"></option>
             </select>
             <input class="btn btn-primary" type="submit" value="Search">
         </form>
@@ -95,7 +101,7 @@
         </thead>
         <tbody>
         <tr th:each="row,rowStat : ${customer}">
-            <td th:text="${rowStat.count}"></td>
+            <td th:text="${customer.getSize()* customer.number + rowStat.count}"></td>
             <td th:text="${row.getName()}"></td>
             <td th:text="${row.getDateOfBirth()}"></td>
             <td th:switch="${row.gender}">

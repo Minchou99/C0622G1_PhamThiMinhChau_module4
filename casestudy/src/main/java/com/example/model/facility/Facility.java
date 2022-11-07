@@ -1,7 +1,6 @@
 package com.example.model.facility;
 
 import com.example.model.contract.Contract;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -20,8 +19,7 @@ public class Facility {
     private double poolArea;
     private int numberOfFloors;
     private String facilityFree;
-    @Value("1")
-    private int isDelete;
+    private int isDelete = 1;
 
     @OneToMany(mappedBy = "facility")
     private Set<Contract> contracts;

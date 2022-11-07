@@ -19,9 +19,7 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private String address;
-
-    @Value("1")
-    private int isDelete;
+    private int isDelete = 1;
 
     @ManyToOne
     @JoinColumn(name = "customer_type_id", referencedColumnName = "id")

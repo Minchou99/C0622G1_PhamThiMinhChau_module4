@@ -8,32 +8,32 @@ import javax.persistence.*;
 public class ContractDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private int quantity;
 
-    @ManyToOne //
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id", referencedColumnName = "id")
    private Contract contract;
 
-    @ManyToOne//
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "attach_facility_id", referencedColumnName = "id")
     private AttachFacility attachFacility;
 
     public ContractDetail() {
     }
 
-    public ContractDetail(int id, int quantity, Contract contract, AttachFacility attachFacility) {
+    public ContractDetail(Integer id, int quantity, Contract contract, AttachFacility attachFacility) {
         this.id = id;
         this.quantity = quantity;
         this.contract = contract;
         this.attachFacility = attachFacility;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

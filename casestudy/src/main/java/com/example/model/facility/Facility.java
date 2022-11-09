@@ -25,11 +25,11 @@ public class Facility {
     private Set<Contract> contracts;
 
     @ManyToOne
-    @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "facility_type_id")
     private FacilityType facilityType;
 
     @ManyToOne
-    @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "rent_type_id")
     private RentType rentType;
 
     public Facility() {

@@ -23,15 +23,15 @@ public class Employee {
     private int isDelete;
 
     @ManyToOne
-    @JoinColumn(name = "position_id", referencedColumnName = "id")
+    @JoinColumn(name = "position_id")
     private Position position;
 
     @ManyToOne
-    @JoinColumn(name = "division_id", referencedColumnName = "id")
+    @JoinColumn(name = "division_id")
     private Division division;
 
     @ManyToOne
-    @JoinColumn(name = "education_degree_id", referencedColumnName = "id")
+    @JoinColumn(name = "education_degree_id")
     private EducationDegree educationDegree;
 
     @OneToOne(cascade = CascadeType.ALL)

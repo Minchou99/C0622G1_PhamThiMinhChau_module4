@@ -22,7 +22,7 @@ public class Customer {
     private int isDelete = 1;
 
     @ManyToOne
-    @JoinColumn(name = "customer_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_type_id")
     private CustomerType customerType;
 
     @JsonManagedReference

@@ -16,9 +16,7 @@ public class Contract {
     private String startDate;
     private String endDate;
     private double deposit;
-
-    @Value("1")
-    private int isDelete;
+    private int isDelete=1;
 
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
@@ -29,7 +27,7 @@ public class Contract {
     private Customer customer;
 
     @OneToMany(mappedBy = "contract")
-    private Set<ContractDetail> contractDetails;
+        private Set<ContractDetail> contractDetails;
 
     @ManyToOne
     @JoinColumn(name = "facility_id", referencedColumnName = "id")

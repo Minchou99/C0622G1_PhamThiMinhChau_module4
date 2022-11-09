@@ -75,7 +75,7 @@
 
         <div>
           <form action="/facility">
-            <input style="width: 30%" type="text" name="nameSearch" placeholder="Input name..."/>
+            <input style="width: 30%" type="text" name="nameSearch" th:value="${searchName}" placeholder="Input name..."/>
             <select name="facilityType">
               <option value="" selected>All Type</option>
               <option th:each="item: ${facilityType}"

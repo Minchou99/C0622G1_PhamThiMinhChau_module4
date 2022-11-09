@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.dto.facility.FacilityDto;
-import com.example.model.customer.Customer;
 import com.example.model.facility.Facility;
 import com.example.service.facility.IFacilityService;
 import com.example.service.facility.IFacilityTypeService;

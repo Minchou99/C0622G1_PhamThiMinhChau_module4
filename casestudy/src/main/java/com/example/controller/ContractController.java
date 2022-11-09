@@ -4,12 +4,14 @@ import com.example.dto.contract.ContractDetailDto;
 import com.example.model.contract.AttachFacility;
 import com.example.model.contract.Contract;
 import com.example.model.contract.ContractDetail;
+import com.example.model.customer.Customer;
 import com.example.repository.employee.IEmployeeRepository;
 import com.example.service.contract.IAttachFacilityService;
 import com.example.service.contract.IContractDetailService;
 import com.example.service.contract.IContractService;
 import com.example.dto.contract.IContractDto;
 import com.example.service.customer.ICustomerService;
+import com.example.service.employee.IEmployeeService;
 import com.example.service.facility.IFacilityService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class ContractController {
     @Autowired
     private ICustomerService customerService;
 
+    @Autowired
+    private IEmployeeService employeeService;
+
     @GetMapping
     public String showList(Model model, @PageableDefault(value = 3) Pageable pageable) {
         Page<IContractDto> contractServiceDtos = contractService.findAllDto(pageable);
@@ -49,7 +54,7 @@ public class ContractController {
         model.addAttribute("attachFacilityList", attachFacilityService.findAll());
         model.addAttribute("contractDetailList", contractDetailService.findAll());
         model.addAttribute("customerList", customerService.findAll());
-        model.addAttribute("employeeList", customerService.findAll());
+        model.addAttribute("employeeList", employeeService.findAll());
         model.addAttribute("contract", new Contract());
         model.addAttribute("contractDetailDto", new ContractDetailDto());
         return "contract/list";

@@ -114,7 +114,49 @@ select f.* from facility f
 join facility_type ft on f.facility_type_id = ft.id 
 where f.name like '%%' and ft.name like '%%' and f.is_delete = 1;
 
+select ct.id as id, ct.start_date as startDate, 
+ct.end_date as endDate, ct.deposit as deposit, f.name as facilityName, 
+            e.`name` as employeeName, c.`name` as customerName, c.id,
+            (f.cost + ct.deposit + sum(ifnull(cd.quantity, 0) * ifnull(af.cost, 0))) 
+            as totalMoney 
+            from contract ct
+            left join facility f on ct.facility_id = f.id 
+            left join employee e on ct.employee_id = e.id 
+            left join customer c on ct.customer_id = c.id 
+            left join contract_detail cd on cd.contract_id = ct.id 
+            left join attach_facility af on af.id = cd.attach_facility_id 
+            group by ct.id;
+            
+select ct.*,(f.cost + ct.deposit + sum(ifnull(cd.quantity, 0) * ifnull(af.cost, 0))) as totalMoney 
+from contract ct left join facility f on ct.facility_id = f.id left join employee e on ct.employee_id = e.id
+left join customer c on ct.customer_id = c.id
+left join contract_detail cd on cd.contract_id = ct.id
+left join attach_facility af on af.id = cd.attach_facility_id 
+group by ct.id;
 
 
+select contract.* , (facility.cost + contract.deposit + sum(ifnull(contract_detail.quantity, 0) * ifnull(attach_facility.cost, 0))) 
+as totalMoney from contract left join facility  on contract.facility_id = facility.id 
+left join employee  on contract.employee_id = employee.id  
+left join customer  on contract.customer_id = customer.id 
+left join contract_detail  on contract_detail.contract_id = contract.id  
+left join attach_facility on attach_facility.id = contract_detail.attach_facility_id 
+group by contract.id;
+
+SELECT attach_facility.`name` AS nameDto,attach_facility.unit AS unitDto, 
+sum(ifnull(contract_detail.quantity, 0)) AS quantityDto,
+attach_facility.`status` AS statusDto, attach_facility.cost AS costDto 
+FROM contract_detail INNER JOIN attach_facility
+ON contract_detail.attach_facility_id = attach_facility.id 
+WHERE contract_detail.contract_id = 1 GROUP BY attach_facility.id;
+
+SELECT customer.address, customer.date_of_birth, customer.email, customer.`name`, 
+contract.end_date AS contractEndDate, contract.start_date AS contractStartDate FROM customer 
+INNER JOIN contract ON customer.id = contract.customer_id
+WHERE contract.end_date > now()
+GROUP BY customer.id
+ORDER BY customer.id ASC ;
+
+ 
 
 

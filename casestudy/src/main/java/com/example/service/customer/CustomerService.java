@@ -1,5 +1,6 @@
 package com.example.service.customer;
 
+import com.example.dto.customer.ICustomerDto;
 import com.example.model.customer.Customer;
 import com.example.model.customer.CustomerType;
 import com.example.repository.customer.ICustomerRepository;
@@ -24,6 +25,11 @@ public class CustomerService implements ICustomerService {
     @Override
     public Page<Customer> findByNameAndEmailAndCustomerType(String name, String email, String typeName, Pageable pageable) {
         return customerRepository.findByNameAndEmailAndCustomerType(name, email, typeName, pageable);
+    }
+
+    @Override
+    public Page<ICustomerDto> getCustomerUsing(Pageable pageable) {
+        return customerRepository.getCustomerUsing(pageable);
     }
 
     @Override

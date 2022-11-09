@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.customer.CustomerDto;
+import com.example.dto.customer.ICustomerDto;
 import com.example.model.customer.Customer;
 import com.example.service.customer.ICustomerService;
 import com.example.service.customer.ICustomerTypeService;
@@ -48,6 +49,13 @@ public class CustomerController {
         model.addAttribute("customerTypeList", customerTypeService.findAll());
         model.addAttribute("customerDto", new CustomerDto());
         return "/customer/create";
+    }
+
+    @GetMapping("/using")
+    public String showCustomerUsing(@PageableDefault(value = 3) Pageable pageable, Model model){
+        Page<ICustomerDto> customerDtos = customerService.getCustomerUsing(pageable);
+        model.addAttribute("customer", customerDtos);
+        return "customer/using";
     }
 
     @PostMapping("/save")

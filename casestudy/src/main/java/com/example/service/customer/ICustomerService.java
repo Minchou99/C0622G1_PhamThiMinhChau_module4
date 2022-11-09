@@ -1,5 +1,6 @@
 package com.example.service.customer;
 
+import com.example.dto.customer.ICustomerDto;
 import com.example.model.customer.Customer;
 import com.example.model.customer.CustomerType;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,8 @@ public interface ICustomerService {
                                                      String email,
                                                      String typeName,
                                                      Pageable pageable);
+
+    Page<ICustomerDto> getCustomerUsing(Pageable pageable);
 
     Optional<Customer> findById(int id);
 

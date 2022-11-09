@@ -1,5 +1,6 @@
 package com.example.repository.customer;
 
+import com.example.dto.customer.ICustomerDto;
 import com.example.model.customer.Customer;
 import com.example.model.customer.CustomerType;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,15 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Query(value = "select * from customer_type ", nativeQuery = true)
     List<CustomerType> getCustomerType();
+
+
+    @Query(value = "SELECT customer.address, customer.date_of_birth AS birthday, customer.email, customer.`name`, \n" +
+            "contract.end_date AS contractEndDate, contract.start_date AS contractStartDate FROM customer \n" +
+            "INNER JOIN contract ON customer.id = contract.customer_id \n" +
+            "WHERE contract.end_date > now() \n" +
+            "GROUP BY customer.id \n" +
+            "ORDER BY customer.id ASC ", nativeQuery = true, countQuery = "select count(*) from customer")
+    Page<ICustomerDto> getCustomerUsing(Pageable pageable);
 
 
 

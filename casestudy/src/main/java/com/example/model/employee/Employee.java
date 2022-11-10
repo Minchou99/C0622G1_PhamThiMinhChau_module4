@@ -11,16 +11,16 @@ import java.util.Set;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
     private String dateOfBirth;
     private String idCard;
-    private double salary;
+    private Double salary;
     private String phoneNumber;
     private String email;
     private String address;
     @Value("1")
-    private int isDelete;
+    private Integer isDelete;
 
     @ManyToOne
     @JoinColumn(name = "position_id")
@@ -44,7 +44,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int id, String name, String dateOfBirth, String idCard, double salary, String phoneNumber, String email, String address, int isDelete, Position position, Division division, EducationDegree educationDegree, User user, Set<Contract> contracts) {
+    public Employee(Integer id, String name, String dateOfBirth, String idCard, Double salary, String phoneNumber, String email, String address, Integer isDelete, Position position, Division division, EducationDegree educationDegree, User user, Set<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -61,11 +61,11 @@ public class Employee {
         this.contracts = contracts;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -93,11 +93,11 @@ public class Employee {
         this.idCard = idCard;
     }
 
-    public double getSalary() {
+    public Double getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
 
@@ -125,11 +125,11 @@ public class Employee {
         this.address = address;
     }
 
-    public int getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 

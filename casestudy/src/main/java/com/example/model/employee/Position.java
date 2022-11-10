@@ -11,7 +11,7 @@ import java.util.Set;
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
 
     @JsonManagedReference
@@ -21,17 +21,17 @@ public class Position {
     public Position() {
     }
 
-    public Position(int id, String name, Set<Employee> employee) {
+    public Position(Integer id, String name, Set<Employee> employee) {
         this.id = id;
         this.name = name;
         this.employee = employee;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

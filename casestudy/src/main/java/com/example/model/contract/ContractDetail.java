@@ -1,7 +1,5 @@
 package com.example.model.contract;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 
 @Entity
@@ -9,7 +7,7 @@ public class ContractDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private int quantity;
+    private Integer quantity;
 
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id", referencedColumnName = "id")
@@ -22,7 +20,7 @@ public class ContractDetail {
     public ContractDetail() {
     }
 
-    public ContractDetail(Integer id, int quantity, Contract contract, AttachFacility attachFacility) {
+    public ContractDetail(Integer id, Integer quantity, Contract contract, AttachFacility attachFacility) {
         this.id = id;
         this.quantity = quantity;
         this.contract = contract;
@@ -37,11 +35,11 @@ public class ContractDetail {
         this.id = id;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 public interface IFacilityRepository extends JpaRepository<Facility, Integer> {
@@ -18,13 +19,11 @@ public interface IFacilityRepository extends JpaRepository<Facility, Integer> {
     Page<Facility> findByNameAndFacilityType(@Param("name") String name,
                                              @Param("typeName") String typeName,
                                              Pageable pageable);
+
     @Query(value = "select * from facility where id=:id and is_delete = 1", nativeQuery = true)
     Optional<Facility> findById(@Param("id") int id);
 
-    @Transactional
-    @Modifying
-    @Query(value = "update facility set is_delete = 0 where id = :id", nativeQuery = true)
-    void remove(@Param("id") int id);
-
+    @Query(value = "SELECT* from facility where facility.is_delete = 1", nativeQuery = true)
+    List<Facility> findAll();
 
 }

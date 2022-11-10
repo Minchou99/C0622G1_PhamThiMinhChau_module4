@@ -1,8 +1,5 @@
 package com.example.model.customer;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,7 +7,7 @@ import java.util.Set;
 public class CustomerType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
 
     @OneToMany(mappedBy = "customerType")
@@ -19,17 +16,17 @@ public class CustomerType {
     public CustomerType() {
     }
 
-    public CustomerType(int id, String name, Set<Customer> customers) {
+    public CustomerType(Integer id, String name, Set<Customer> customers) {
         this.id = id;
         this.name = name;
         this.customers = customers;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

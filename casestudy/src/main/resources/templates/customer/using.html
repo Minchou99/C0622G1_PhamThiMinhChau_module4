@@ -24,6 +24,7 @@
         <th>Email</th>
         <th>Start Date</th>
         <th>End Date</th>
+        <th>Attach Facility</th>
     </tr>
     </thead>
 
@@ -37,22 +38,45 @@
         <td th:text="${x.getContractStartDate()}"></td>
         <td th:text="${x.getContractEndDate()}"></td>
         <td class="text-center">
-<!--            <button-->
-<!--                    th:attr="onclick=|addContractDetail('${contract.id}')|"-->
-<!--                    class="btn btn-primary btn-outline-secondary btn-sm" data-bs-toggle="modal"-->
-<!--                    data-bs-target="#addContractDetail">-->
-<!--                <span class="fa-solid fa-plus text-light h6 m-auto"></span>-->
-<!--            </button>-->
-
-<!--            <a th:href="@{/contract/__${contract.id}__}">-->
-<!--                <button class="btn btn-primary btn-outline-secondary btn-sm ms-3 px-3">-->
-<!--                    <span class="text-light m-auto">Attach facility list</span>-->
-<!--                </button>-->
-<!--            </a>-->
-
+            <button class="btn btn-primary btn-outline-secondary btn-sm ms-3 px-3" data-bs-toggle="modal" >
+<!--                    data-bs-target="#view"-->
+<!--                    th:attr="onclick=|infoContractId('${customer.id}')|">-->
+                <span class="text-light m-auto">Attach facility list</span>
+            </button>
         </td>
     </tr>
     </tbody>
 </table>
+
+<!--    contract detail-->
+<div class="modal fade" id="view" tabindex="-1" aria-labelledby="exampleModalLabel1"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel2">Attach Facility List</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-success table-striped">
+                    <thead>
+                    <tr>
+                        <th>Attach facility name</th>
+                        <th>Unit</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody id="attachFacilityList">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

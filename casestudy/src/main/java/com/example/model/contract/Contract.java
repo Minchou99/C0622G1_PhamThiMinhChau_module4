@@ -12,11 +12,11 @@ import java.util.Set;
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String startDate;
     private String endDate;
-    private double deposit;
-    private int isDelete=1;
+    private Double deposit;
+    private Integer isDelete=1;
 
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
@@ -36,7 +36,7 @@ public class Contract {
     public Contract() {
     }
 
-    public Contract(int id, String startDate, String endDate, double deposit, int isDelete, Employee employee, Customer customer, Set<ContractDetail> contractDetails, Facility facility) {
+    public Contract(Integer id, String startDate, String endDate, Double deposit, Integer isDelete, Employee employee, Customer customer, Set<ContractDetail> contractDetails, Facility facility) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -48,11 +48,11 @@ public class Contract {
         this.facility = facility;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -72,19 +72,19 @@ public class Contract {
         this.endDate = endDate;
     }
 
-    public double getDeposit() {
+    public Double getDeposit() {
         return deposit;
     }
 
-    public void setDeposit(double deposit) {
+    public void setDeposit(Double deposit) {
         this.deposit = deposit;
     }
 
-    public int getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 

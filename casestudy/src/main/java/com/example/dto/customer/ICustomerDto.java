@@ -14,4 +14,14 @@ public interface ICustomerDto {
 
   String getContractStartDate();
 
+  String getNameDto();
+
+  String getUnitDto();
+
+  String getQuantityDto();
+
+  String getStatusDto();
+
+  String getCostDto();
+
 }

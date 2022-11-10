@@ -11,15 +11,15 @@ import java.util.Set;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
     private String dateOfBirth;
-    private int gender;
+    private Integer gender;
     private String idCard;
     private String phoneNumber;
     private String email;
     private String address;
-    private int isDelete = 1;
+    private Integer isDelete = 1;
 
     @ManyToOne
     @JoinColumn(name = "customer_type_id")
@@ -32,7 +32,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int id, String name, String dateOfBirth, int gender, String idCard, String phoneNumber, String email, String address, int isDelete, CustomerType customerType, Set<Contract> contracts) {
+    public Customer(Integer id, String name, String dateOfBirth, Integer gender, String idCard, String phoneNumber, String email, String address, Integer isDelete, CustomerType customerType, Set<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -46,11 +46,11 @@ public class Customer {
         this.contracts = contracts;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -70,11 +70,11 @@ public class Customer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -110,11 +110,11 @@ public class Customer {
         this.address = address;
     }
 
-    public int getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 

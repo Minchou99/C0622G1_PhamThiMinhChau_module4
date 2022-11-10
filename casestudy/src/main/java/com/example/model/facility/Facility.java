@@ -9,17 +9,17 @@ import java.util.Set;
 public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
-    private int area;
-    private double cost;
-    private int maxPeople;
+    private Integer area;
+    private Double cost;
+    private Integer maxPeople;
     private String standardRoom;
     private String descriptionOtherConvenience;
-    private double poolArea;
-    private int numberOfFloors;
+    private Double poolArea;
+    private Integer numberOfFloors;
     private String facilityFree;
-    private int isDelete = 1;
+    private Integer isDelete = 1;
 
     @OneToMany(mappedBy = "facility")
     private Set<Contract> contracts;
@@ -35,7 +35,7 @@ public class Facility {
     public Facility() {
     }
 
-    public Facility(int id, String name, int area, double cost, int maxPeople, String standardRoom, String descriptionOtherConvenience, double poolArea, int numberOfFloors, String facilityFree, int isDelete, Set<Contract> contracts, FacilityType facilityType, RentType rentType) {
+    public Facility(Integer id, String name, Integer area, Double cost, Integer maxPeople, String standardRoom, String descriptionOtherConvenience, Double poolArea, Integer numberOfFloors, String facilityFree, Integer isDelete, Set<Contract> contracts, FacilityType facilityType, RentType rentType) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -52,11 +52,11 @@ public class Facility {
         this.rentType = rentType;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -68,27 +68,27 @@ public class Facility {
         this.name = name;
     }
 
-    public int getArea() {
+    public Integer getArea() {
         return area;
     }
 
-    public void setArea(int area) {
+    public void setArea(Integer area) {
         this.area = area;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public int getMaxPeople() {
+    public Integer getMaxPeople() {
         return maxPeople;
     }
 
-    public void setMaxPeople(int maxPeople) {
+    public void setMaxPeople(Integer maxPeople) {
         this.maxPeople = maxPeople;
     }
 
@@ -108,19 +108,19 @@ public class Facility {
         this.descriptionOtherConvenience = descriptionOtherConvenience;
     }
 
-    public double getPoolArea() {
+    public Double getPoolArea() {
         return poolArea;
     }
 
-    public void setPoolArea(double poolArea) {
+    public void setPoolArea(Double poolArea) {
         this.poolArea = poolArea;
     }
 
-    public int getNumberOfFloors() {
+    public Integer getNumberOfFloors() {
         return numberOfFloors;
     }
 
-    public void setNumberOfFloors(int numberOfFloors) {
+    public void setNumberOfFloors(Integer numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
     }
 
@@ -132,11 +132,11 @@ public class Facility {
         this.facilityFree = facilityFree;
     }
 
-    public int getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 

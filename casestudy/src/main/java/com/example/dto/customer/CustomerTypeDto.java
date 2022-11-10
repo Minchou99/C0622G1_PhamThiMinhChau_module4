@@ -5,24 +5,24 @@ import com.example.model.customer.Customer;
 import java.util.Set;
 
 public class CustomerTypeDto {
-    private int id;
+    private Integer id;
     private String name;
     private Set<Customer> customers;
 
     public CustomerTypeDto() {
     }
 
-    public CustomerTypeDto(int id, String name, Set<Customer> customers) {
+    public CustomerTypeDto(Integer id, String name, Set<Customer> customers) {
         this.id = id;
         this.name = name;
         this.customers = customers;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

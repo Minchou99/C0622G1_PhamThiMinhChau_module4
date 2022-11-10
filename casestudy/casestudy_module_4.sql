@@ -150,12 +150,25 @@ FROM contract_detail INNER JOIN attach_facility
 ON contract_detail.attach_facility_id = attach_facility.id 
 WHERE contract_detail.contract_id = 1 GROUP BY attach_facility.id;
 
-SELECT customer.address, customer.date_of_birth, customer.email, customer.`name`, 
-contract.end_date AS contractEndDate, contract.start_date AS contractStartDate FROM customer 
+SELECT customer.id,  customer.address, customer.date_of_birth, customer.email, customer.`name`, 
+contract.end_date AS contractEndDate, contract.start_date AS contractStartDate,
+attach_facility.`name` AS nameDto,attach_facility.unit AS unitDto, 
+sum(ifnull(contract_detail.quantity, 0)) AS quantityDto,
+attach_facility.`status` AS statusDto, attach_facility.cost AS costDto FROM customer 
 INNER JOIN contract ON customer.id = contract.customer_id
-WHERE contract.end_date > now()
-GROUP BY customer.id
+INNER JOIN contract_detail on contract_detail.contract_id = contract.id
+INNER JOIN attach_facility on contract_detail.attach_facility_id= attach_facility.id
+WHERE contract.end_date > now() and contract.customer_id = 6
 ORDER BY customer.id ASC ;
+
+select* from customer 
+inner join contract on customer.id = contract.customer_id
+inner join contract_detail on contract_detail.contract_id = contract.id
+inner join attach_facility on contract_detail.attach_facility_id = attach_facility.id
+WHERE contract.end_date > now();
+
+SELECT * FROM contract_detail 
+WHERE contract_detail.contract_id = 1;
 
  
 

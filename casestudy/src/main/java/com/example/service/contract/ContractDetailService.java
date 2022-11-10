@@ -26,4 +26,9 @@ public class ContractDetailService implements IContractDetailService {
     public void save(ContractDetail contractDetail) {
         contractDetailRepository.save(contractDetail);
     }
+
+    @Override
+    public List<ContractDetail> getListAttachContract(Integer id) {
+        return contractDetailRepository.getListAttachContract(id);
+    }
 }

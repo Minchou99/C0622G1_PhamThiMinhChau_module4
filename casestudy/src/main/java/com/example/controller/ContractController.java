@@ -95,7 +95,7 @@ public class ContractController {
     @GetMapping("/{id}")
     public String showAttachFacility(@PathVariable Integer id, Model model) {
         model.addAttribute("contractDetails", contractDetailService.showAll(id));
-        return "contract/attachList";
+        return "redirect:/contract";
     }
 
 }

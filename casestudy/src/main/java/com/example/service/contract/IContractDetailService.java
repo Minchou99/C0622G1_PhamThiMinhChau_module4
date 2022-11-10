@@ -14,5 +14,7 @@ public interface IContractDetailService {
 
     void save(ContractDetail contractDetail);
 
+    List<ContractDetail> getListAttachContract(Integer id);
+
 
 }

@@ -72,7 +72,7 @@ public class CustomerController {
         } else {
             Customer customer = new Customer();
             BeanUtils.copyProperties(customerDto, customer);
-
+            customer.setIsDelete(1);
             customerService.save(customer);
             redirectAttributes.addFlashAttribute("message", "Create customer successfully !");
             return "redirect:/customer";

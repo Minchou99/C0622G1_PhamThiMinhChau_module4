@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +56,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
             "ORDER BY customer.id ASC ", nativeQuery = true, countQuery = "select count(*) from customer")
     Page<ICustomerDto> getCustomerUsing(Pageable pageable);
 
-
-
+    @Query(value = "select* from customer where customer.is_delete = 1", nativeQuery = true)
+    List<Customer> findAll();
 }

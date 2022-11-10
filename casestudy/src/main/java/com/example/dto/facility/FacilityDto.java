@@ -4,20 +4,22 @@ import com.example.model.contract.Contract;
 import com.example.model.facility.FacilityType;
 import com.example.model.facility.RentType;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 public class FacilityDto {
-    private int id;
+    private Integer id;
+    @NotBlank(message = "Do not empty, please fill in...")
     private String name;
-    private int area;
-    private double cost;
-    private int maxPeople;
+    private Integer area;
+    private Double cost;
+    private Integer maxPeople;
     private String standardRoom;
     private String descriptionOtherConvenience;
-    private double poolArea;
-    private int numberOfFloors;
+    private Double poolArea;
+    private Integer numberOfFloors;
     private String facilityFree;
-    private int isDelete = 1;
+    private Integer isDelete = 1;
     private FacilityType facilityType;
     private RentType rentType;
     private Set<Contract> contracts;
@@ -25,7 +27,7 @@ public class FacilityDto {
     public FacilityDto() {
     }
 
-    public FacilityDto(int id, String name, int area, double cost, int maxPeople, String standardRoom, String descriptionOtherConvenience, double poolArea, int numberOfFloors, String facilityFree, int isDelete, FacilityType facilityType, RentType rentType, Set<Contract> contracts) {
+    public FacilityDto(Integer id, String name, Integer area, Double cost, Integer maxPeople, String standardRoom, String descriptionOtherConvenience, Double poolArea, Integer numberOfFloors, String facilityFree, Integer isDelete, FacilityType facilityType, RentType rentType, Set<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -42,11 +44,11 @@ public class FacilityDto {
         this.contracts = contracts;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -58,27 +60,27 @@ public class FacilityDto {
         this.name = name;
     }
 
-    public int getArea() {
+    public Integer getArea() {
         return area;
     }
 
-    public void setArea(int area) {
+    public void setArea(Integer area) {
         this.area = area;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public int getMaxPeople() {
+    public Integer getMaxPeople() {
         return maxPeople;
     }
 
-    public void setMaxPeople(int maxPeople) {
+    public void setMaxPeople(Integer maxPeople) {
         this.maxPeople = maxPeople;
     }
 
@@ -98,19 +100,19 @@ public class FacilityDto {
         this.descriptionOtherConvenience = descriptionOtherConvenience;
     }
 
-    public double getPoolArea() {
+    public Double getPoolArea() {
         return poolArea;
     }
 
-    public void setPoolArea(double poolArea) {
+    public void setPoolArea(Double poolArea) {
         this.poolArea = poolArea;
     }
 
-    public int getNumberOfFloors() {
+    public Integer getNumberOfFloors() {
         return numberOfFloors;
     }
 
-    public void setNumberOfFloors(int numberOfFloors) {
+    public void setNumberOfFloors(Integer numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
     }
 
@@ -122,11 +124,11 @@ public class FacilityDto {
         this.facilityFree = facilityFree;
     }
 
-    public int getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 

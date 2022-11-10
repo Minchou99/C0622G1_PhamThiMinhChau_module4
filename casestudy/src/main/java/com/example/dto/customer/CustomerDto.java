@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class CustomerDto implements Validator {
 
-    private int id;
+    private Integer id;
 
     @NotBlank(message = "Do not empty, please fill in...")
     @Pattern(regexp = "^([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",
@@ -22,24 +22,24 @@ public class CustomerDto implements Validator {
     @NotBlank(message = "Do not empty, please fill in...")
     private String dateOfBirth;
 
-    private int gender;
+    private Integer gender;
 
     @NotBlank(message = "Do not empty, please fill in...")
     @Pattern(regexp = "^(\\d{9}|\\d{12})$", message = "Invalid Id card (ex: 123456789)")
     private String idCard;
 
     @NotBlank(message = "Do not empty, please fill in...")
-    @Pattern(regexp = "^(090|091|\\(\\+84\\)90|\\(\\+84\\)91)\\d{7}$")
+    @Pattern(regexp = "^(090|091|\\(\\+84\\)90|\\(\\+84\\)91)\\d{7}$", )
     private String phoneNumber;
 
     @NotBlank(message = "Do not empty, please fill in...")
-    @Email(message = "invalid email (ex: thuytiendang2003@gmail.com)")
+    @Email(message = "invalid email (ex: abc@gmail.com)")
     private String email;
 
     @NotBlank(message = "Do not empty, please fill in...")
     private String address;
 
-    private int isDelete;
+    private Integer isDelete;
 
     private CustomerType customerType;
 
@@ -48,7 +48,7 @@ public class CustomerDto implements Validator {
     public CustomerDto() {
     }
 
-    public CustomerDto(int id, String name, String dateOfBirth, int gender, String idCard, String phoneNumber, String email, String address, int isDelete, CustomerType customerType, Set<Contract> contracts) {
+    public CustomerDto(Integer id, String name, String dateOfBirth, Integer gender, String idCard, String phoneNumber, String email, String address, Integer isDelete, CustomerType customerType, Set<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -62,11 +62,11 @@ public class CustomerDto implements Validator {
         this.contracts = contracts;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -86,11 +86,11 @@ public class CustomerDto implements Validator {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -126,11 +126,11 @@ public class CustomerDto implements Validator {
         this.address = address;
     }
 
-    public int getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 

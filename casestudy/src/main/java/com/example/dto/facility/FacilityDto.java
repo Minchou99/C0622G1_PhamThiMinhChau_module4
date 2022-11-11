@@ -5,18 +5,37 @@ import com.example.model.facility.FacilityType;
 import com.example.model.facility.RentType;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 public class FacilityDto {
     private Integer id;
+
     @NotBlank(message = "Do not empty, please fill in...")
+    @Pattern(regexp = "^([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",
+            message = "Invalid format (not include number, first character must lowercase)")
     private String name;
+
+    @NotBlank(message = "Do not empty, please fill in...")
+    @Pattern(regexp = "^([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",
+            message = "Invalid format (not include number, first character must lowercase)")
     private Integer area;
+
+    @NotBlank(message = "Do not empty, please fill in...")
+    @Pattern(regexp = "^[1-9]\\d*| *$", message = "Price must be greater than 0.")
     private Double cost;
+
+    @NotBlank(message = "Do not empty, please fill in...")
+    @Pattern(regexp = "^[1-9]\\d*| *$", message = "People must be greater than 0.")
     private Integer maxPeople;
+
     private String standardRoom;
     private String descriptionOtherConvenience;
+
+    @Pattern(regexp = "^[1-9]\\d*| *$", message = "People must be greater than 0.")
     private Double poolArea;
+
+    @Pattern(regexp = "^[1-9]\\d*| *$", message = "People must be greater than 0.")
     private Integer numberOfFloors;
     private String facilityFree;
     private Integer isDelete = 1;

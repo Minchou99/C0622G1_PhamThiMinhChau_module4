@@ -2,6 +2,7 @@ package com.example.dto.customer;
 
 import com.example.model.contract.Contract;
 import com.example.model.customer.CustomerType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -29,11 +30,10 @@ public class CustomerDto implements Validator {
     private String idCard;
 
     @NotBlank(message = "Do not empty, please fill in...")
-    @Pattern(regexp = "^(090|091|\\(\\+84\\)90|\\(\\+84\\)91)\\d{7}$", )
+    @Pattern(regexp = "^(090|091|\\(\\+84\\)90|\\(\\+84\\)91)\\d{7}$",message = "Invalid phone number (ex: 090/091XXXXXXX (+84)90/91XXXXXXX)")
     private String phoneNumber;
 
     @NotBlank(message = "Do not empty, please fill in...")
-    @Email(message = "invalid email (ex: abc@gmail.com)")
     private String email;
 
     @NotBlank(message = "Do not empty, please fill in...")
@@ -157,6 +157,10 @@ public class CustomerDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        CustomerDto customerDto = (CustomerDto) target;
 
+        if(!customerDto.getEmail().matches("^[A-Za-z0-9]+@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$")){
+            errors.rejectValue("email","email.matches", "email invalid, please fill in ... (ex: abc@gmail.com)");
+        }
     }
 }

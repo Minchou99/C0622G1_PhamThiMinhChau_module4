@@ -318,6 +318,26 @@
                 document.getElementById("contractId").value = id;
             }
 
+            $(function () {
+                $("#datepicker").datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    changeYear: true,
+                    changeMonth: true,
+                    yearRange: "-80:-18",
+                    minDate: "-80Y", maxDate: "-18Y"
+                });
+            });
+
+            $(function () {
+                $("#datepicker1").datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    changeYear: true,
+                    changeMonth: true,
+                    yearRange: "-80:-18",
+                    minDate: "-80Y", maxDate: "-18Y"
+                });
+            });
+
             function infoContractId(id) {
                 $("#attachFacilityList").empty();
                 $.ajax({

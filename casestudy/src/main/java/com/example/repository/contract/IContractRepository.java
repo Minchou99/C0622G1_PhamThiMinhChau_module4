@@ -24,7 +24,7 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
             "                   ((IFNULL(SUM(cd.quantity * af.cost), 0) + f.cost)) AS total\n" +
             "                FROM\n" +
             "                contract ct\n" +
-            "                       LEFT JOIN\n" +
+            "                       RIGHT JOIN\n" +
             "                    facility f ON ct.facility_id = f.id\n" +
             "                      LEFT JOIN\n" +
             "                  contract_detail cd ON ct.id = cd.contract_id\n" +
@@ -32,6 +32,7 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
             "                   attach_facility af ON cd.attach_facility_id = af.id\n" +
             "                        LEFT JOIN\n" +
             "                customer c ON ct.customer_id = c.id\n" +
+            " where ct.is_delete = 1 and f.is_delete = 1 and c.is_delete = 1 " +
             "                GROUP BY ct.id",
             nativeQuery = true,countQuery = "select count(*) from contract")
     Page<IContractDto> findAllDto(Pageable pageable);
